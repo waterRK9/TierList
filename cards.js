@@ -1,52 +1,53 @@
 const cards = document.querySelectorAll('.card');
 const addCard = document.querySelector('#addCard');
 const textBox = document.querySelector('#textBox');
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
-function getColor(){ 
-    return "hsl(" + 360 * Math.random() + ',' +
-                (25 + 70 * Math.random()) + '%,' + 
-                (85 + 10 * Math.random()) + '%)'
-}
+const color = document.querySelector('#colorPicker');
 
 /* Add Card Logic */
 const addCardToBank = (event) => {
-    const card = createCard(textBox.value);
+    const card = createCard(textBox.value, color.value);
     const bank = document.querySelector('#bank');
     bank.appendChild(card);
 }
 addCard.onclick = addCardToBank;
 
 /* Card Logic */
-const createCard = (id) => {
+const createCard = (id, color, cardData = null) => {
     const card = document.createElement('div');
     card.classList.add('card');
     card.setAttribute('draggable', 'true');
-    card.style.backgroundColor = getColor();
+    card.style.backgroundColor = color;
     card.id = id;
     card.ondragstart = onDragStart;
     card.ondragend = onDragEnd;
     card.onclick = deleteCard;
-    changeText(card, id);
+    if (cardData?.innerHTML) {
+        card.innerHTML = cardData.innerHTML;
+        card.style.backgroundColor = cardData.backgroundColor;
+    } else {
+        changeText(card, id);
+    }
     return card;
 }
 
 const changeText = (card, id) => {
     card.innerHTML = id;
+
+    /* Save Data to Local Storage */
+    console.log(card.parentNode);
+    const cardData = {
+        innerHTML: card.innerHTML,
+        row: card.parentNode?.querySelector('.label')?.innerText,
+        backgroundColor: card.style.backgroundColor,
+    }
+    window.localStorage.setItem(card.id, JSON.stringify(cardData));
 }
 
 const deleteCard = (event) => {
     const willDeleteCard = window.confirm('Do you want to delete this card?');
     if (willDeleteCard) {
         event.target.remove();
+        window.localStorage.removeItem(event.target.id);
     }
 }
 
@@ -61,10 +62,30 @@ const onDragStart = (event) => {
 const onDragEnd = (event) => {
     event.target.style.visibility = 'visible';
     console.log('end dragging');
-
 }
 
 cards.forEach((card) => {
     card.ondragstart = onDragStart;
     card.ondragend = onDragEnd;
 })
+
+/* Logic upon first window load */
+window.onload = () => {
+    const keys = Object.keys(window.localStorage);
+    keys.forEach((key) => {
+        const cardData = JSON.parse(window.localStorage.getItem(key));
+        const loadedCard = createCard(key, "", cardData);
+        const row = document.querySelectorAll('.rowContainer');
+        const correctRowContainer = Array.from(row).find((row) => {
+            return row.querySelector('.label').innerText === cardData.row;
+        });
+        const correctRow = correctRowContainer?.querySelector('.row');
+        console.log(correctRow);
+        if (correctRow) {
+            correctRow.appendChild(loadedCard);
+        } else {
+            const bank = document.querySelector('#bank');
+            bank.appendChild(loadedCard);
+        }
+    })
+}

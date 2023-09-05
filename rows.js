@@ -1,4 +1,4 @@
-const rows = document.querySelectorAll('.row')
+const rows = document.querySelectorAll('.rowContainer')
 const colors = ['green', 'aquamarine', 'yellow', 'orange', 'orangered', 'red']
 
 const onDragOver = (event) => {
@@ -10,8 +10,12 @@ const onDrop = (event) => {
     draggedCardId = event.dataTransfer.getData('id');
     draggedCard = document.getElementById(draggedCardId);
 
-    console.log('current id is:', draggedCardId);
-    
+    const cardData = {
+        innerHTML: draggedCard.innerHTML,
+        row: event.target.parentNode.querySelector('.label').innerText,
+        backgroundColor: draggedCard.style.backgroundColor,
+    }
+    window.localStorage.setItem(draggedCard.id, JSON.stringify(cardData));
     event.target.appendChild(draggedCard);
     console.log('dropped element');
 }

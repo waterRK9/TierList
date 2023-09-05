@@ -6,28 +6,39 @@
     </head>
     <body>
         <span class="headerContainer">
-            <h1>Tier List</h1>
-            <button id="addCard">+</button>
-            <input type="text" id="textBox">
+            <div id="titleBox">
+                <h1>Tier List</h1>
+                <button id="addCard">+</button>
+            </div>
+            <div id="propertyBox">
+                <input type="text" id="textBox">
+                <input type="color" id="colorPicker" value="#0000ff">
+            </div>
         </span>
         <div id="board">
-            <div class="row">
+            <div class="rowContainer">
                 <div class="label">S</div>
+                <div class="row"></div>
             </div>
-            <div class="row">
+            <div class="rowContainer">
                 <div class="label">A</div>
+                <div class="row"></div>
             </div>
-            <div class="row">
+            <div class="rowContainer">
                 <div class="label">B</div>
+                <div class="row"></div>
             </div>
-            <div class="row">
+            <div class="rowContainer">
                 <div class="label">C</div>
+                <div class="row"></div>
             </div>
-            <div class="row">
+            <div class="rowContainer">
                 <div class="label">D</div>
+                <div class="row"></div>
             </div>
-            <div class="row">
+            <div class="rowContainer">
                 <div class="label">F</div>
+                <div class="row"></div>
             </div>
         </div>
         <h2>Card Bank</h2>
@@ -38,4 +49,5 @@
     <script src="./cards.js"></script>
     <script src="./rows.js"></script>
     <script src="./bank.js"></script>
+    <script src="./index.js"></script>
 </html>
