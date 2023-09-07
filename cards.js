@@ -17,6 +17,7 @@ const createCard = (id, color, cardData = null) => {
     card.classList.add('card');
     card.setAttribute('draggable', 'true');
     card.style.backgroundColor = color;
+    card.style.opacity = Math.floor(Math.random() * (0.95 - 0.75 + 1.0)) + 0.75;
     card.id = id;
     card.ondragstart = onDragStart;
     card.ondragend = onDragEnd;

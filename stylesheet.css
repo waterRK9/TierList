@@ -40,7 +40,7 @@ body {
     justify-content: space-between;
     padding: 10px;
     width: 80vw;
-    height: 80vh;
+    height: 65vh;
     background-color: rgb(48, 47, 47);
 }
 
@@ -68,6 +68,11 @@ body {
     height: 100%;
     width: 100px;
     background-color: green;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }
 
 .card {
@@ -76,7 +81,12 @@ body {
     align-items: center;
     height: 86px;
     width: 100px;
-    background-color: white;
+    background-color: black;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }
 
 #bank {
